@@ -1,27 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import { postData } from "@/services/services";
 
 import { InputComponent } from "./InputComponent";
 
+type Type = "error" | "warning" | "success";
+
 interface Props {
-	type: string;
+	isSignIn: boolean;
+	setIsOpen: Dispatch<SetStateAction<boolean>>;
+	setType: Dispatch<SetStateAction<Type>>;
+	setMessage: Dispatch<SetStateAction<string>>;
 }
 
-export const FormComponent = ({ type }: Props) => {
+export const FormComponent = ({
+	isSignIn,
+	setIsOpen,
+	setType,
+	setMessage,
+}: Props) => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [date, setDate] = useState("");
 	const [sex, setSex] = useState("");
 	const [country, setCountry] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 
 	const register = async () => {
 		if (!username || !email || !password || !date || !sex || !country) {
-			alert("Error!");
+			setIsOpen(true);
+			setType("warning");
+			setMessage("Todos los campos son requeridos");
 		} else {
+			setIsLoading(true);
+
 			const user = {
 				username,
 				email,
@@ -35,22 +50,35 @@ export const FormComponent = ({ type }: Props) => {
 				const [isSuccess] = await postData("auth/register", user);
 
 				if (isSuccess) {
-					alert("Usuario generado con exito!");
+					setIsOpen(true);
+					setType("success");
+					setMessage("Usuario generado con exito!");
 				} else {
 					throw new Error("Error al crear el usuario");
 				}
 			} catch (error) {
-				console.error(error);
+				if (error instanceof Error) {
+					console.error(error.message);
+					setIsOpen(true);
+					setType("error");
+					setMessage(error.message);
+				} else {
+					console.error("Error desconocido", error);
+				}
 			} finally {
-				alert("Finalizo!");
+				setIsLoading(false);
 			}
 		}
 	};
 
 	const login = async () => {
 		if (!email || !password) {
-			alert("Error!");
+			setIsOpen(true);
+			setType("warning");
+			setMessage("Todos los campos son requeridos");
 		} else {
+			setIsLoading(true);
+
 			const user = {
 				email,
 				password,
@@ -60,14 +88,23 @@ export const FormComponent = ({ type }: Props) => {
 				const [isSuccess] = await postData("auth/login", user);
 
 				if (isSuccess) {
-					alert("Iniciando sesión!");
+					setIsOpen(true);
+					setType("success");
+					setMessage("Iniciando sesión!");
 				} else {
 					throw new Error("Error al iniciar sesión");
 				}
 			} catch (error) {
-				console.error(error);
+				if (error instanceof Error) {
+					console.error(error.message);
+					setIsOpen(true);
+					setType("error");
+					setMessage(error.message);
+				} else {
+					console.error("Error desconocido", error);
+				}
 			} finally {
-				alert("Finalizo!");
+				setIsLoading(false);
 			}
 		}
 	};
@@ -75,7 +112,7 @@ export const FormComponent = ({ type }: Props) => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (type === "register") {
+		if (!isSignIn) {
 			register();
 		} else {
 			login();
@@ -88,7 +125,7 @@ export const FormComponent = ({ type }: Props) => {
 			className="flex flex-col gap-4 max-w-lg mx-auto w-full"
 			onSubmit={handleSubmit}
 		>
-			{type === "register" && (
+			{!isSignIn && (
 				<InputComponent
 					title="Nombre de Usuario"
 					altTitle="username"
@@ -111,7 +148,7 @@ export const FormComponent = ({ type }: Props) => {
 				value={password}
 				setValue={setPassword}
 			/>
-			{type === "register" && (
+			{!isSignIn && (
 				<>
 					<InputComponent
 						title="Fecha de Nacimiento"
@@ -148,9 +185,21 @@ export const FormComponent = ({ type }: Props) => {
 			)}
 			<button
 				type="submit"
-				className="bg-blue-500 text-white rounded shadow p-2 cursor-pointer transition-colors hover:bg-blue-600"
+				className={`bg-blue-500 text-white rounded shadow p-2 transition-colors
+      ${
+				isLoading
+					? "cursor-not-allowed bg-gray-400"
+					: "cursor-pointer hover:bg-blue-600"
+			}`}
+				disabled={isLoading}
 			>
-				{type === "register" ? "Registrarse" : "Iniciar Sesión"}
+				{isLoading ? (
+					<div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
+				) : !isSignIn ? (
+					"Registrarse"
+				) : (
+					"Iniciar Sesión"
+				)}
 			</button>
 		</form>
 	);
