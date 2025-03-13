@@ -1,6 +1,7 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { postData } from "@/services/services";
 
@@ -21,6 +22,8 @@ export const FormComponent = ({
 	setType,
 	setMessage,
 }: Props) => {
+	const router = useRouter();
+
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -53,6 +56,10 @@ export const FormComponent = ({
 					setIsOpen(true);
 					setType("success");
 					setMessage("Usuario generado con exito!");
+
+					setTimeout(() => {
+						router.push("/signIn");
+					}, 2500);
 				} else {
 					throw new Error("Error al crear el usuario");
 				}
@@ -91,6 +98,10 @@ export const FormComponent = ({
 					setIsOpen(true);
 					setType("success");
 					setMessage("Iniciando sesión!");
+
+					setTimeout(() => {
+						router.push("/");
+					}, 2500);
 				} else {
 					throw new Error("Error al iniciar sesión");
 				}
