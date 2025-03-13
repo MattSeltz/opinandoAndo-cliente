@@ -9,6 +9,13 @@ interface User {
 	country?: string;
 }
 
+interface Post {
+	title: string;
+	body: string;
+	date: string;
+	author: string | null;
+}
+
 export const getData = async (path: string) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}`, {
@@ -41,7 +48,7 @@ export const getOneData = async (path: string, id: string) => {
 	}
 };
 
-export const postData = async (path: string, body: User) => {
+export const postData = async (path: string, body: User | Post) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}`, {
 			method: "POST",
@@ -61,7 +68,7 @@ export const postData = async (path: string, body: User) => {
 	}
 };
 
-export const putData = async (path: string, id: string, body: User) => {
+export const putData = async (path: string, id: string, body: User | Post) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}/${id}`, {
 			method: "PUT",

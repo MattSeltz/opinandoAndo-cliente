@@ -92,12 +92,14 @@ export const FormComponent = ({
 			};
 
 			try {
-				const [isSuccess] = await postData("auth/login", user);
+				const [isSuccess, res] = await postData("auth/login", user);
 
 				if (isSuccess) {
 					setIsOpen(true);
 					setType("success");
 					setMessage("Iniciando sesión!");
+
+					sessionStorage.setItem("user", res.id);
 
 					setTimeout(() => {
 						router.push("/");

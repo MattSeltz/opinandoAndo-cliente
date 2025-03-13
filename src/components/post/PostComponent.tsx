@@ -1,25 +1,25 @@
 import { ButtonComponent } from "./ButtonComponent";
 
-export const PostComponent = () => {
+interface Props {
+	author: string;
+	date: string;
+	title: string;
+	body: string;
+}
+
+export const PostComponent = ({ author, date, title, body }: Props) => {
 	return (
 		<li className="shadow rounded p-4">
 			<article className="flex flex-col gap-2">
 				<header className="flex justify-between mb-2">
 					<small>
-						<b>MattSeltz</b>
+						<b>{author}</b>
 					</small>
-					<small>2025-03-13</small>
+					<small>{date}</small>
 				</header>
-				<h3 className="text-center font-bold">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit.{" "}
-				</h3>
+				<h3 className="text-center font-bold">{title}</h3>
 				<section>
-					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus culpa
-						vel quaerat ut necessitatibus, libero perferendis cumque officiis
-						quasi consequatur ipsum, quas cum ullam dicta iste perspiciatis ab
-						nemo est?
-					</p>
+					<p>{body}</p>
 				</section>
 				<footer className="flex justify-between mt-4">
 					<ButtonComponent title="Desacuerdo" />
