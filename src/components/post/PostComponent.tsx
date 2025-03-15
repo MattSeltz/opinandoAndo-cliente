@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { ButtonComponent } from "./ButtonComponent";
 
 interface Props {
@@ -5,16 +7,25 @@ interface Props {
 	date: string;
 	title: string;
 	body: string;
+	authorId: string;
 }
 
-export const PostComponent = ({ author, date, title, body }: Props) => {
+export const PostComponent = ({
+	author,
+	date,
+	title,
+	body,
+	authorId,
+}: Props) => {
 	return (
 		<li className="shadow rounded p-4">
 			<article className="flex flex-col gap-2">
 				<header className="flex justify-between mb-2">
-					<small>
-						<b>{author}</b>
-					</small>
+					<Link href={`/profile/${authorId}`}>
+						<small>
+							<b>{author}</b>
+						</small>
+					</Link>
 					<small>{date}</small>
 				</header>
 				<h3 className="text-center font-bold">{title}</h3>

@@ -29,7 +29,7 @@ export default async function Home() {
 	const cookieStore = await cookies();
 	const miCookie = cookieStore.get("token");
 
-	const [_, posts] = await getData("posts");
+	const [, posts] = await getData("posts");
 
 	return (
 		<main className="p-4 flex flex-col gap-4">
@@ -54,6 +54,7 @@ export default async function Home() {
 						date={post.date}
 						title={post.title}
 						body={post.body}
+						authorId={post.author._id}
 					/>
 				))}
 			</ul>

@@ -6,6 +6,7 @@ import { LiComponent } from "./LiComponent";
 export const HeaderComponent = async () => {
 	const cookieStore = await cookies();
 	const miCookie = cookieStore.get("token");
+	const userId = cookieStore.get("userId")?.value;
 
 	return (
 		<header className="flex items-center justify-between bg-blue-500 text-white p-4">
@@ -16,7 +17,7 @@ export const HeaderComponent = async () => {
 			<nav>
 				<ul className="flex gap-4">
 					{miCookie ? (
-						<LiComponent to="/">Profile</LiComponent>
+						<LiComponent to={`/profile/${userId}`}>Profile</LiComponent>
 					) : (
 						<>
 							<LiComponent to="/signIn">SignIn</LiComponent>

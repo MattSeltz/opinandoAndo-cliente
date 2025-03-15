@@ -32,7 +32,7 @@ export const getData = async (path: string) => {
 	}
 };
 
-export const getOneData = async (path: string, id: string) => {
+export const getOneData = async (path: string, id: string | undefined) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}/${id}`, {
 			method: "GET",
