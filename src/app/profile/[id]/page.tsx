@@ -5,6 +5,7 @@ import { getOneData } from "@/services/services";
 import { PostComponent } from "@/components/post/PostComponent";
 import { LinkComponent } from "@/components/profile/LinkComponent";
 import { InfoComponent } from "@/components/profile/InfoComponent";
+import Link from "next/link";
 
 interface Author {
 	_id: string;
@@ -40,9 +41,7 @@ export default async function ProfileId({ params }: { params: Props }) {
 	return (
 		<main className="p-4 flex flex-col gap-4">
 			<h3 className="text-center text-lg">Perfil</h3>
-
 			<h2 className="text-center text-lg font-bold">{user.username}</h2>
-
 			<section className="flex flex-col gap-4 max-w-lg mx-auto w-full">
 				<InfoComponent title="Email" info={user.email} />
 				<InfoComponent
@@ -55,6 +54,15 @@ export default async function ProfileId({ params }: { params: Props }) {
 			</section>
 
 			{miCookie === params.id && (
+				<Link
+					href={`/edit/${params.id}`}
+					className="bg-blue-500 text-white rounded shadow p-2 transition-colors
+					 text-center hover:bg-blue-600"
+				>
+					Editar
+				</Link>
+			)}
+			{miCookie === params.id && (
 				<>
 					<h3 className="text-center text-lg">Analiticas</h3>
 
@@ -64,7 +72,6 @@ export default async function ProfileId({ params }: { params: Props }) {
 					</section>
 				</>
 			)}
-
 			<ul className="flex flex-col gap-6 max-w-lg mx-auto">
 				{user.posts.reverse().map((post: Post) => (
 					<PostComponent

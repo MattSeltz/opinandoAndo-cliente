@@ -3,7 +3,7 @@ import { ENVIRONMENT } from "@/configs/configs";
 interface User {
 	username?: string;
 	email: string;
-	password: string;
+	password?: string;
 	date?: string;
 	sex?: string;
 	country?: string;
@@ -36,7 +36,10 @@ export const getData = async (path: string) => {
 	}
 };
 
-export const getOneData = async (path: string, id: string | undefined) => {
+export const getOneData = async (
+	path: string,
+	id: string | undefined | null
+) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}/${id}`, {
 			method: "GET",
@@ -74,7 +77,7 @@ export const postData = async (path: string, body: User | Post) => {
 
 export const putData = async (
 	path: string,
-	id: string | null,
+	id: string | undefined,
 	body: User | Post | PostId
 ) => {
 	try {

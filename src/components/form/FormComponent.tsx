@@ -1,9 +1,9 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { postData } from "@/services/services";
+import { getOneData, postData, putData } from "@/services/services";
 
 import { setUserCookie } from "@/app/actions";
 
@@ -16,6 +16,7 @@ interface Props {
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
 	setType: Dispatch<SetStateAction<Type>>;
 	setMessage: Dispatch<SetStateAction<string>>;
+	id?: string;
 }
 
 export const FormComponent = ({
@@ -23,6 +24,7 @@ export const FormComponent = ({
 	setIsOpen,
 	setType,
 	setMessage,
+	id,
 }: Props) => {
 	const router = useRouter();
 
@@ -33,6 +35,22 @@ export const FormComponent = ({
 	const [sex, setSex] = useState("");
 	const [country, setCountry] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		if (id) {
+			getOneData("users", id)
+				.then((res) => {
+					if (res[0]) {
+						setUsername(res[1].username);
+						setEmail(res[1].email);
+						setDate(res[1].date);
+						setSex(res[1].sex);
+						setCountry(res[1].country);
+					}
+				})
+				.catch((e) => console.error(e));
+		}
+	}, []);
 
 	const register = async () => {
 		if (!username || !email || !password || !date || !sex || !country) {
@@ -135,11 +153,58 @@ export const FormComponent = ({
 		}
 	};
 
+	const handleEdit = async (e: React.FormEvent) => {
+		e.preventDefault();
+
+		if (!username || !email || !date || !sex || !country) {
+			setIsOpen(true);
+			setType("warning");
+			setMessage("Todos los campos son requeridos");
+		} else {
+			setIsLoading(true);
+
+			const user = {
+				username,
+				email,
+				date,
+				sex,
+				country,
+			};
+
+			try {
+				const [isSuccess] = await putData("users", id, user);
+
+				if (isSuccess) {
+					setIsOpen(true);
+					setType("success");
+					setMessage("Usuario editado con exito!");
+
+					setTimeout(() => {
+						router.push(`/profile/${id}`);
+					}, 2500);
+				} else {
+					throw new Error("Error al editar el usuario");
+				}
+			} catch (error) {
+				if (error instanceof Error) {
+					console.error(error.message);
+					setIsOpen(true);
+					setType("error");
+					setMessage(error.message);
+				} else {
+					console.error("Error desconocido", error);
+				}
+			} finally {
+				setIsLoading(false);
+			}
+		}
+	};
+
 	return (
 		<form
 			autoComplete="off"
 			className="flex flex-col gap-4 max-w-lg mx-auto w-full"
-			onSubmit={handleSubmit}
+			onSubmit={id ? handleEdit : handleSubmit}
 		>
 			{!isSignIn && (
 				<InputComponent
@@ -157,13 +222,16 @@ export const FormComponent = ({
 				value={email}
 				setValue={setEmail}
 			/>
-			<InputComponent
-				title="Contraseña"
-				altTitle="password"
-				type="password"
-				value={password}
-				setValue={setPassword}
-			/>
+			{!id && (
+				<InputComponent
+					title="Contraseña"
+					altTitle="password"
+					type="password"
+					value={password}
+					setValue={setPassword}
+				/>
+			)}
+
 			{!isSignIn && (
 				<>
 					<InputComponent
@@ -212,7 +280,11 @@ export const FormComponent = ({
 				{isLoading ? (
 					<div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
 				) : !isSignIn ? (
-					"Registrarse"
+					id ? (
+						"Editar"
+					) : (
+						"Registrarse"
+					)
 				) : (
 					"Iniciar Sesión"
 				)}
