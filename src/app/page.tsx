@@ -47,7 +47,7 @@ export default async function Home() {
 			</div>
 
 			<ul className="flex flex-col gap-6 max-w-lg mx-auto">
-				{posts.map((post: Post) => (
+				{posts.reverse().map((post: Post) => (
 					<PostComponent
 						key={post._id}
 						author={post.author.username}
@@ -55,6 +55,8 @@ export default async function Home() {
 						title={post.title}
 						body={post.body}
 						authorId={post.author._id}
+						profile={false}
+						id={post._id}
 					/>
 				))}
 			</ul>

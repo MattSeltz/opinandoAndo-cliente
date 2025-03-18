@@ -66,7 +66,7 @@ export default async function ProfileId({ params }: { params: Props }) {
 			)}
 
 			<ul className="flex flex-col gap-6 max-w-lg mx-auto">
-				{user.posts.map((post: Post) => (
+				{user.posts.reverse().map((post: Post) => (
 					<PostComponent
 						key={post._id}
 						author={post.author.username}
@@ -74,6 +74,8 @@ export default async function ProfileId({ params }: { params: Props }) {
 						title={post.title}
 						body={post.body}
 						authorId={post.author._id}
+						profile={miCookie === params.id}
+						id={post._id}
 					/>
 				))}
 			</ul>

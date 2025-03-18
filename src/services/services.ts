@@ -16,6 +16,10 @@ interface Post {
 	author: string | null;
 }
 
+interface PostId {
+	postId: string;
+}
+
 export const getData = async (path: string) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}`, {
@@ -68,7 +72,11 @@ export const postData = async (path: string, body: User | Post) => {
 	}
 };
 
-export const putData = async (path: string, id: string, body: User | Post) => {
+export const putData = async (
+	path: string,
+	id: string | null,
+	body: User | Post | PostId
+) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}/${id}`, {
 			method: "PUT",

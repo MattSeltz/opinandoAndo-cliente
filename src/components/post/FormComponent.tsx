@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { postData } from "@/services/services";
+import { postData, putData } from "@/services/services";
 
 type Type = "error" | "warning" | "success";
 
@@ -38,16 +38,26 @@ export const FormComponent = ({ setIsOpen, setType, setMessage }: Props) => {
 			};
 
 			try {
-				const [isSuccess] = await postData("posts", post);
+				const [isSuccess, res] = await postData("posts", post);
 
 				if (isSuccess) {
-					setIsOpen(true);
-					setType("success");
-					setMessage("Post generado con exito!");
+					const [isSuccess] = await putData(
+						"users/addPost",
+						sessionStorage.getItem("user"),
+						{ postId: res._id }
+					);
 
-					setTimeout(() => {
-						router.push("/");
-					}, 2500);
+					if (isSuccess) {
+						setIsOpen(true);
+						setType("success");
+						setMessage("Post generado con exito!");
+
+						setTimeout(() => {
+							router.push("/");
+						}, 2500);
+					} else {
+						throw new Error("Error al crear el post");
+					}
 				} else {
 					throw new Error("Error al crear el post");
 				}
