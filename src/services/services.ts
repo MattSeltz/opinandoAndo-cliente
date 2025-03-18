@@ -20,6 +20,11 @@ interface PostId {
 	postId: string;
 }
 
+interface Vote {
+	type: string;
+	userId: string;
+}
+
 export const getData = async (path: string) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}`, {
@@ -77,8 +82,8 @@ export const postData = async (path: string, body: User | Post) => {
 
 export const putData = async (
 	path: string,
-	id: string | undefined,
-	body: User | Post | PostId
+	id: string | undefined | null,
+	body: User | Post | PostId | Vote
 ) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}/${id}`, {

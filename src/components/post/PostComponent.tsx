@@ -11,6 +11,8 @@ interface Props {
 	authorId: string;
 	profile: boolean;
 	id: string;
+	acuerdo?: boolean;
+	desacuerdo?: boolean;
 }
 
 export const PostComponent = ({
@@ -21,6 +23,8 @@ export const PostComponent = ({
 	authorId,
 	profile,
 	id,
+	acuerdo,
+	desacuerdo,
 }: Props) => {
 	return (
 		<li className="shadow rounded p-4">
@@ -41,8 +45,22 @@ export const PostComponent = ({
 					<p>{body}</p>
 				</section>
 				<footer className="flex justify-between mt-4">
-					<ButtonComponent title="Desacuerdo" />
-					<ButtonComponent title="Acuerdo" />
+					{!acuerdo && (
+						<ButtonComponent
+							title="Desacuerdo"
+							userId={authorId}
+							id={id}
+							isVote={acuerdo || desacuerdo}
+						/>
+					)}
+					{!desacuerdo && (
+						<ButtonComponent
+							title="Acuerdo"
+							userId={authorId}
+							id={id}
+							isVote={acuerdo || desacuerdo}
+						/>
+					)}
 				</footer>
 			</article>
 		</li>

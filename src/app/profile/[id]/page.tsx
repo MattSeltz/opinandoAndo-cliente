@@ -57,7 +57,7 @@ export default async function ProfileId({ params }: { params: Props }) {
 				<Link
 					href={`/edit/${params.id}`}
 					className="bg-blue-500 text-white rounded shadow p-2 transition-colors
-					 text-center hover:bg-blue-600"
+					 text-center max-w-lg mx-auto w-full hover:bg-blue-600"
 				>
 					Editar
 				</Link>
@@ -72,7 +72,7 @@ export default async function ProfileId({ params }: { params: Props }) {
 					</section>
 				</>
 			)}
-			<ul className="flex flex-col gap-6 max-w-lg mx-auto">
+			<ul className="flex flex-col gap-6 max-w-lg mx-auto w-full">
 				{user.posts.reverse().map((post: Post) => (
 					<PostComponent
 						key={post._id}

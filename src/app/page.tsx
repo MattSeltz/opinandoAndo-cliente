@@ -23,11 +23,14 @@ interface Post {
 	date: string;
 	title: string;
 	body: string;
+	acuerdo: Author[];
+	desacuerdo: Author[];
 }
 
 export default async function Home() {
 	const cookieStore = await cookies();
 	const miCookie = cookieStore.get("token");
+	const id = cookieStore.get("userId")?.value;
 
 	const [, posts] = await getData("posts");
 
@@ -46,7 +49,7 @@ export default async function Home() {
 				)}
 			</div>
 
-			<ul className="flex flex-col gap-6 max-w-lg mx-auto">
+			<ul className="flex flex-col gap-6 max-w-lg mx-auto w-full">
 				{posts.reverse().map((post: Post) => (
 					<PostComponent
 						key={post._id}
@@ -57,6 +60,8 @@ export default async function Home() {
 						authorId={post.author._id}
 						profile={false}
 						id={post._id}
+						acuerdo={post.acuerdo.some((item) => item._id === id)}
+						desacuerdo={post.desacuerdo.some((item) => item._id === id)}
 					/>
 				))}
 			</ul>
