@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 
 import { getOneData, postData, putData } from "@/services/services";
 
-import { setUserCookie } from "@/app/actions";
-
 import { InputComponent } from "./InputComponent";
 
 type Type = "error" | "warning" | "success";
@@ -120,10 +118,10 @@ export const FormComponent = ({
 					setMessage("Iniciando sesión!");
 
 					sessionStorage.setItem("user", res.id);
-					await setUserCookie(res.id);
 
 					setTimeout(() => {
 						router.push("/");
+						router.refresh();
 					}, 2500);
 				} else {
 					throw new Error("Error al iniciar sesión");

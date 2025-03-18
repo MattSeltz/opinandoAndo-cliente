@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 
 import { LiComponent } from "./LiComponent";
+import { SignOutButtonComponent } from "./SignOutButtonComponent";
 
 export const HeaderComponent = async () => {
 	const cookieStore = await cookies();
@@ -17,7 +18,10 @@ export const HeaderComponent = async () => {
 			<nav>
 				<ul className="flex gap-4">
 					{miCookie ? (
-						<LiComponent to={`/profile/${userId}`}>Profile</LiComponent>
+						<>
+							<LiComponent to={`/profile/${userId}`}>Profile</LiComponent>
+							<SignOutButtonComponent />
+						</>
 					) : (
 						<>
 							<LiComponent to="/signIn">SignIn</LiComponent>

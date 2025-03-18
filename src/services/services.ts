@@ -60,7 +60,7 @@ export const getOneData = async (
 	}
 };
 
-export const postData = async (path: string, body: User | Post) => {
+export const postData = async (path: string, body: User | Post | undefined) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}`, {
 			method: "POST",

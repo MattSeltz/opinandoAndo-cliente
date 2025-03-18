@@ -2,13 +2,44 @@ export const TrashComponent = () => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			x="0px"
-			y="0px"
-			width="20"
-			height="20"
+			width="24"
+			height="24"
 			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className="icon icon-tabler icons-tabler-outline icon-tabler-trash"
 		>
-			<path d="M 10 2 L 9 3 L 3 3 L 3 5 L 21 5 L 21 3 L 15 3 L 14 2 L 10 2 z M 4.3652344 7 L 6.0683594 22 L 17.931641 22 L 19.634766 7 L 4.3652344 7 z"></path>
+			<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+			<path d="M4 7l16 0" />
+			<path d="M10 11l0 6" />
+			<path d="M14 11l0 6" />
+			<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+			<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+		</svg>
+	);
+};
+
+export const SignOutComponent = () => {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className="icon icon-tabler icons-tabler-outline icon-tabler-logout"
+		>
+			<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+			<path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+			<path d="M9 12h12l-3 -3" />
+			<path d="M18 15l3 -3" />
 		</svg>
 	);
 };
