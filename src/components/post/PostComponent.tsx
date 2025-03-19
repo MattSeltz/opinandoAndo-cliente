@@ -11,8 +11,8 @@ interface Props {
 	authorId: string;
 	profile: boolean;
 	id: string;
-	acuerdo?: boolean;
-	desacuerdo?: boolean;
+	acuerdo: boolean;
+	desacuerdo: boolean;
 }
 
 export const PostComponent = ({
@@ -48,7 +48,6 @@ export const PostComponent = ({
 					{!acuerdo && (
 						<ButtonComponent
 							title="Desacuerdo"
-							userId={authorId}
 							id={id}
 							isVote={acuerdo || desacuerdo}
 						/>
@@ -56,7 +55,6 @@ export const PostComponent = ({
 					{!desacuerdo && (
 						<ButtonComponent
 							title="Acuerdo"
-							userId={authorId}
 							id={id}
 							isVote={acuerdo || desacuerdo}
 						/>

@@ -6,12 +6,11 @@ import { putData } from "@/services/services";
 
 interface Props {
 	title: string;
-	userId: string;
 	id: string;
 	isVote: boolean | undefined;
 }
 
-export const ButtonComponent = ({ title, userId, id, isVote }: Props) => {
+export const ButtonComponent = ({ title, id, isVote }: Props) => {
 	const router = useRouter();
 
 	const handleClick = async () => {
@@ -20,7 +19,7 @@ export const ButtonComponent = ({ title, userId, id, isVote }: Props) => {
 			try {
 				const [isSuccess] = await putData("posts/vote", id, {
 					type: title.toLowerCase(),
-					userId,
+					userId: sessionStorage.getItem("user"),
 				});
 
 				if (isSuccess) {

@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 import { getOneData } from "@/services/services";
 
 import { PostComponent } from "@/components/post/PostComponent";
-import { LinkComponent } from "@/components/profile/LinkComponent";
+import { PorcentajeComponent } from "@/components/profile/PorcentajeComponent";
 import { InfoComponent } from "@/components/profile/InfoComponent";
-import Link from "next/link";
 
 interface Author {
 	_id: string;
@@ -26,6 +26,8 @@ interface Post {
 	date: string;
 	title: string;
 	body: string;
+	acuerdo: string[];
+	desacuerdo: string[];
 }
 
 interface Props {
@@ -35,8 +37,17 @@ interface Props {
 export default async function ProfileId({ params }: { params: Props }) {
 	const cookieStore = await cookies();
 	const miCookie = cookieStore.get("userId")?.value;
+	const id = cookieStore.get("userId")?.value;
 
 	const [, user] = await getOneData("users", params.id);
+
+	const acuerdos = user.posts.flatMap((post: Post) => post.acuerdo);
+	const desacuerdos = user.posts.flatMap((post: Post) => post.desacuerdo);
+
+	const total = acuerdos.length + desacuerdos.length;
+	const porcentajeAcuerdo = total > 0 ? (acuerdos.length / total) * 100 : 0;
+	const porcentajeDesacuerdo =
+		total > 0 ? (desacuerdos.length / total) * 100 : 0;
 
 	return (
 		<main className="p-4 flex flex-col gap-4">
@@ -67,8 +78,14 @@ export default async function ProfileId({ params }: { params: Props }) {
 					<h3 className="text-center text-lg">Analiticas</h3>
 
 					<section className="flex flex-col gap-2 max-w-lg mx-auto w-full">
-						<LinkComponent title="desacuerdo" id={miCookie} />
-						<LinkComponent title="acuerdo" id={miCookie} />
+						<PorcentajeComponent
+							title="desacuerdo"
+							porcentaje={porcentajeDesacuerdo}
+						/>
+						<PorcentajeComponent
+							title="acuerdo"
+							porcentaje={porcentajeAcuerdo}
+						/>
 					</section>
 				</>
 			)}
@@ -83,6 +100,8 @@ export default async function ProfileId({ params }: { params: Props }) {
 						authorId={post.author._id}
 						profile={miCookie === params.id}
 						id={post._id}
+						acuerdo={post.acuerdo.some((item) => item === id)}
+						desacuerdo={post.desacuerdo.some((item) => item === id)}
 					/>
 				))}
 			</ul>

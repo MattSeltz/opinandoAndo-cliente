@@ -22,7 +22,7 @@ interface PostId {
 
 interface Vote {
 	type: string;
-	userId: string;
+	userId: string | null;
 }
 
 export const getData = async (path: string) => {
