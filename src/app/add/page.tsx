@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 
+import type { AlertType } from "@/types/types";
+
 import { AlertComponent } from "@/components/alert/AlertComponent";
 import { FormComponent } from "@/components/post/FormComponent";
 
-type Type = "error" | "warning" | "success";
-
 export default function Add() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [type, setType] = useState<Type>("success");
+	const [type, setType] = useState<AlertType>("success");
 	const [message, setMessage] = useState("");
 
 	return (

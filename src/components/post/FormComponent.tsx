@@ -3,13 +3,13 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { postData, putData } from "@/services/services";
+import type { AlertType } from "@/types/types";
 
-type Type = "error" | "warning" | "success";
+import { postData, putData } from "@/services/services";
 
 interface Props {
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
-	setType: Dispatch<SetStateAction<Type>>;
+	setType: Dispatch<SetStateAction<AlertType>>;
 	setMessage: Dispatch<SetStateAction<string>>;
 }
 

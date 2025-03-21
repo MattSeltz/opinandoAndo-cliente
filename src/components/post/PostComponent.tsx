@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import type { Author } from "@/types/interfaces";
+
 import { ButtonComponent } from "./ButtonComponent";
 import { DeleteButtonComponent } from "./DeleteButtonComponent";
 
@@ -13,6 +15,8 @@ interface Props {
 	id: string;
 	acuerdo: boolean;
 	desacuerdo: boolean;
+	acuerdos: Author[];
+	desacuerdos: Author[];
 }
 
 export const PostComponent = ({
@@ -25,7 +29,14 @@ export const PostComponent = ({
 	id,
 	acuerdo,
 	desacuerdo,
+	acuerdos,
+	desacuerdos,
 }: Props) => {
+	const total = acuerdos.length + desacuerdos.length;
+	const porcentajeAcuerdo = total > 0 ? (acuerdos.length / total) * 100 : 0;
+	const porcentajeDesacuerdo =
+		total > 0 ? (desacuerdos.length / total) * 100 : 0;
+
 	return (
 		<li className="shadow rounded p-4">
 			<article className="flex flex-col gap-2">
@@ -50,6 +61,7 @@ export const PostComponent = ({
 							title="Desacuerdo"
 							id={id}
 							isVote={acuerdo || desacuerdo}
+							porcentaje={porcentajeDesacuerdo}
 						/>
 					)}
 					{!desacuerdo && (
@@ -57,6 +69,7 @@ export const PostComponent = ({
 							title="Acuerdo"
 							id={id}
 							isVote={acuerdo || desacuerdo}
+							porcentaje={porcentajeAcuerdo}
 						/>
 					)}
 				</footer>

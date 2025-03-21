@@ -8,9 +8,10 @@ interface Props {
 	title: string;
 	id: string;
 	isVote: boolean | undefined;
+	porcentaje: number;
 }
 
-export const ButtonComponent = ({ title, id, isVote }: Props) => {
+export const ButtonComponent = ({ title, id, isVote, porcentaje }: Props) => {
 	const router = useRouter();
 
 	const handleClick = async () => {
@@ -50,7 +51,7 @@ export const ButtonComponent = ({ title, id, isVote }: Props) => {
 `}
 			onClick={handleClick}
 		>
-			{title}
+			{title} {isVote && `${porcentaje}%`}
 		</button>
 	);
 };

@@ -1,34 +1,13 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
 
+import type { Post } from "@/types/interfaces";
+
 import { getOneData } from "@/services/services";
 
 import { PostComponent } from "@/components/post/PostComponent";
 import { PorcentajeComponent } from "@/components/profile/PorcentajeComponent";
 import { InfoComponent } from "@/components/profile/InfoComponent";
-
-interface Author {
-	_id: string;
-	username: string;
-	password: string;
-	email: string;
-	date: string;
-	sex: string;
-	country: string;
-	posts: string[];
-	createdAt: string;
-	updatedAt: string;
-}
-
-interface Post {
-	_id: string;
-	author: Author;
-	date: string;
-	title: string;
-	body: string;
-	acuerdo: string[];
-	desacuerdo: string[];
-}
 
 interface Props {
 	id: string;
@@ -102,6 +81,8 @@ export default async function ProfileId({ params }: { params: Props }) {
 						id={post._id}
 						acuerdo={post.acuerdo.some((item) => item === id)}
 						desacuerdo={post.desacuerdo.some((item) => item === id)}
+						acuerdos={post.acuerdo}
+						desacuerdos={post.desacuerdo}
 					/>
 				))}
 			</ul>

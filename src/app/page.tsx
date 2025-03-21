@@ -1,31 +1,11 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
 
+import type { Post } from "@/types/interfaces";
+
 import { getData } from "@/services/services";
 
 import { PostComponent } from "@/components/post/PostComponent";
-
-interface Author {
-	_id: string;
-	username: string;
-	password: string;
-	email: string;
-	date: string;
-	sex: string;
-	country: string;
-	posts: string[];
-	createdAt: string;
-	updatedAt: string;
-}
-interface Post {
-	_id: string;
-	author: Author;
-	date: string;
-	title: string;
-	body: string;
-	acuerdo: Author[];
-	desacuerdo: Author[];
-}
 
 export default async function Home() {
 	const cookieStore = await cookies();
@@ -62,6 +42,8 @@ export default async function Home() {
 						id={post._id}
 						acuerdo={post.acuerdo.some((item) => item._id === id)}
 						desacuerdo={post.desacuerdo.some((item) => item._id === id)}
+						acuerdos={post.acuerdo}
+						desacuerdos={post.desacuerdo}
 					/>
 				))}
 			</ul>

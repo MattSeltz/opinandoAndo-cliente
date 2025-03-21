@@ -3,16 +3,16 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import type { AlertType } from "@/types/types";
+
 import { getOneData, postData, putData } from "@/services/services";
 
 import { InputComponent } from "./InputComponent";
 
-type Type = "error" | "warning" | "success";
-
 interface Props {
 	isSignIn: boolean;
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
-	setType: Dispatch<SetStateAction<Type>>;
+	setType: Dispatch<SetStateAction<AlertType>>;
 	setMessage: Dispatch<SetStateAction<string>>;
 	id?: string;
 }

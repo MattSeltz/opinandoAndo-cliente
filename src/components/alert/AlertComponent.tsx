@@ -1,7 +1,9 @@
 "use client";
 
+import type { AlertType } from "@/types/types";
+
 type AlertProps = {
-	type: "error" | "warning" | "success";
+	type: AlertType;
 	message: string;
 	onClose?: () => void;
 };
