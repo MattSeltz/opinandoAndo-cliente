@@ -28,6 +28,8 @@ export const FormComponent = ({ setIsOpen, setType, setMessage }: Props) => {
 			setType("warning");
 			setMessage("Todos los campos son requeridos");
 		} else {
+			setIsLoading(true);
+
 			const post = {
 				title,
 				body,

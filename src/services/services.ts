@@ -25,6 +25,15 @@ interface Vote {
 	userId: string | null;
 }
 
+interface To {
+	to?: string;
+	id?: string;
+}
+
+interface Password {
+	password: string;
+}
+
 export const getData = async (path: string) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}`, {
@@ -60,7 +69,10 @@ export const getOneData = async (
 	}
 };
 
-export const postData = async (path: string, body: User | Post | undefined) => {
+export const postData = async (
+	path: string,
+	body: User | Post | undefined | To
+) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}`, {
 			method: "POST",
@@ -83,7 +95,7 @@ export const postData = async (path: string, body: User | Post | undefined) => {
 export const putData = async (
 	path: string,
 	id: string | undefined | null,
-	body: User | Post | PostId | Vote
+	body: User | Post | PostId | Vote | Password
 ) => {
 	try {
 		const res = await fetch(`${ENVIRONMENT}${path}/${id}`, {

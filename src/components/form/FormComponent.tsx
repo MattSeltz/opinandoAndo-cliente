@@ -8,6 +8,7 @@ import type { AlertType } from "@/types/types";
 import { getOneData, postData, putData } from "@/services/services";
 
 import { InputComponent } from "./InputComponent";
+import Link from "next/link";
 
 interface Props {
 	isSignIn: boolean;
@@ -264,6 +265,11 @@ export const FormComponent = ({
 						setValue={setCountry}
 					/>
 				</>
+			)}
+			{isSignIn && (
+				<Link href={"/recovery"} className="text-center text-blue-500">
+					¿Olvidaste tu Contraseña?
+				</Link>
 			)}
 			<button
 				type="submit"
