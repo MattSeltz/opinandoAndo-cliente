@@ -1,5 +1,6 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
 import type { AlertType } from "@/types/types";
@@ -7,11 +8,9 @@ import type { AlertType } from "@/types/types";
 import { AlertComponent } from "@/components/alert/AlertComponent";
 import { FormComponent } from "@/components/form/FormComponent";
 
-interface Props {
-	id: string;
-}
+export default function Edit() {
+	const params = useParams<{ id: string }>();
 
-export default function Edit({ params }: { params: Props }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [type, setType] = useState<AlertType>("success");
 	const [message, setMessage] = useState("");

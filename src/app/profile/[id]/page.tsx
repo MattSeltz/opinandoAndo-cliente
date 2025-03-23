@@ -9,16 +9,16 @@ import { PostComponent } from "@/components/post/PostComponent";
 import { PorcentajeComponent } from "@/components/profile/PorcentajeComponent";
 import { InfoComponent } from "@/components/profile/InfoComponent";
 
-interface Props {
-	id: string;
-}
+export default async function ProfileId(props: {
+	params: Promise<{ id: string }>;
+}) {
+	const paramsId = await props.params;
 
-export default async function ProfileId({ params }: { params: Props }) {
 	const cookieStore = await cookies();
 	const miCookie = cookieStore.get("userId")?.value;
 	const id = cookieStore.get("userId")?.value;
 
-	const [, user] = await getOneData("users", params.id);
+	const [, user] = await getOneData("users", paramsId.id);
 
 	const acuerdos = user.posts.flatMap((post: Post) => post.acuerdo);
 	const desacuerdos = user.posts.flatMap((post: Post) => post.desacuerdo);
@@ -43,16 +43,16 @@ export default async function ProfileId({ params }: { params: Props }) {
 				<InfoComponent title="Sexo" info={user.sex} />
 			</section>
 
-			{miCookie === params.id && (
+			{miCookie === paramsId.id && (
 				<Link
-					href={`/edit/${params.id}`}
+					href={`/edit/${paramsId.id}`}
 					className="bg-blue-500 text-white rounded shadow p-2 transition-colors
 					 text-center max-w-lg mx-auto w-full hover:bg-blue-600"
 				>
 					Editar
 				</Link>
 			)}
-			{miCookie === params.id && (
+			{miCookie === paramsId.id && (
 				<>
 					<h3 className="text-center text-lg">Analiticas</h3>
 
@@ -77,10 +77,10 @@ export default async function ProfileId({ params }: { params: Props }) {
 						title={post.title}
 						body={post.body}
 						authorId={post.author._id}
-						profile={miCookie === params.id}
+						profile={miCookie === paramsId.id}
 						id={post._id}
-						acuerdo={post.acuerdo.some((item) => item === id)}
-						desacuerdo={post.desacuerdo.some((item) => item === id)}
+						acuerdo={post.acuerdo.some((item) => item._id === id)}
+						desacuerdo={post.desacuerdo.some((item) => item._id === id)}
 						acuerdos={post.acuerdo}
 						desacuerdos={post.desacuerdo}
 					/>
