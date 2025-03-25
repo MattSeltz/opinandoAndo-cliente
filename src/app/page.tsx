@@ -12,6 +12,9 @@ export default async function Home() {
 	const miCookie = cookieStore.get("token");
 	const id = cookieStore.get("userId")?.value;
 
+	console.log("Cookie token:", miCookie);
+	console.log("Cookie userId:", id);
+
 	const [, posts] = await getData("posts");
 
 	return (

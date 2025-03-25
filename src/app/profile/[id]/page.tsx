@@ -18,6 +18,9 @@ export default async function ProfileId(props: {
 	const miCookie = cookieStore.get("userId")?.value;
 	const id = cookieStore.get("userId")?.value;
 
+	console.log("Cookie token:", miCookie);
+	console.log("Cookie userId:", id);
+
 	const [, user] = await getOneData("users", paramsId.id);
 
 	const acuerdos = user.posts.flatMap((post: Post) => post.acuerdo);

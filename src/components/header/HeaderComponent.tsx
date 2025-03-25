@@ -9,6 +9,9 @@ export const HeaderComponent = async () => {
 	const miCookie = cookieStore.get("token");
 	const userId = cookieStore.get("userId")?.value;
 
+	console.log("Cookie token:", miCookie);
+	console.log("Cookie userId:", userId);
+
 	return (
 		<header className="flex items-center justify-between bg-blue-500 text-white p-4">
 			<Link href={"/"}>
