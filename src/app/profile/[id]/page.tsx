@@ -15,11 +15,7 @@ export default async function ProfileId(props: {
 	const paramsId = await props.params;
 
 	const cookieStore = await cookies();
-	const miCookie = cookieStore.get("userId")?.value;
 	const id = cookieStore.get("userId")?.value;
-
-	console.log("Cookie token:", miCookie);
-	console.log("Cookie userId:", id);
 
 	const [, user] = await getOneData("users", paramsId.id);
 
@@ -46,7 +42,7 @@ export default async function ProfileId(props: {
 				<InfoComponent title="Sexo" info={user.sex} />
 			</section>
 
-			{miCookie === paramsId.id && (
+			{id === paramsId.id && (
 				<Link
 					href={`/edit/${paramsId.id}`}
 					className="bg-blue-500 text-white rounded shadow p-2 transition-colors
@@ -55,7 +51,7 @@ export default async function ProfileId(props: {
 					Editar
 				</Link>
 			)}
-			{miCookie === paramsId.id && (
+			{id === paramsId.id && (
 				<>
 					<h3 className="text-center text-lg">Analiticas</h3>
 
@@ -80,7 +76,7 @@ export default async function ProfileId(props: {
 						title={post.title}
 						body={post.body}
 						authorId={post.author._id}
-						profile={miCookie === paramsId.id}
+						profile={id === paramsId.id}
 						id={post._id}
 						acuerdo={post.acuerdo.some((item) => item._id === id)}
 						desacuerdo={post.desacuerdo.some((item) => item._id === id)}
