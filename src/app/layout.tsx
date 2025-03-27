@@ -15,8 +15,6 @@ export const metadata: Metadata = {
 	description: "Social App made by Matías Seltzer",
 };
 
-export const dynamic = "force-dynamic";
-
 export default function RootLayout({
 	children,
 }: Readonly<{
