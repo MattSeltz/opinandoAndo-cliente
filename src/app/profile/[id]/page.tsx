@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import Link from "next/link";
 
 import type { Post } from "@/types/interfaces";
@@ -12,6 +12,9 @@ import { InfoComponent } from "@/components/profile/InfoComponent";
 export default async function ProfileId(props: {
 	params: Promise<{ id: string }>;
 }) {
+	const headersList = await headers();
+	console.log("Cookies en SSR:", headersList.get("cookie"));
+
 	const paramsId = await props.params;
 
 	const cookieStore = await cookies();

@@ -1,10 +1,13 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 import { LiComponent } from "./LiComponent";
 import { SignOutButtonComponent } from "./SignOutButtonComponent";
 
 export const HeaderComponent = async () => {
+	const headersList = await headers();
+	console.log("Cookies en SSR:", headersList.get("cookie"));
+
 	const cookieStore = await cookies();
 	const miCookie = cookieStore.get("token");
 	const userId = cookieStore.get("userId")?.value;

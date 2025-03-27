@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import Link from "next/link";
 
 import type { Post } from "@/types/interfaces";
@@ -8,6 +8,9 @@ import { getData } from "@/services/services";
 import { PostComponent } from "@/components/post/PostComponent";
 
 export default async function Home() {
+	const headersList = await headers();
+	console.log("Cookies en SSR:", headersList.get("cookie"));
+
 	const cookieStore = await cookies();
 	const miCookie = cookieStore.get("token");
 	const id = cookieStore.get("userId")?.value;
