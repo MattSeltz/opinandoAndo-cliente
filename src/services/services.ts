@@ -36,7 +36,7 @@ interface Password {
 
 export const getData = async (path: string) => {
 	try {
-		const res = await fetch(`${ENVIRONMENT}${path}`, {
+		const res = await fetch(`${ENVIRONMENT}api/${path}`, {
 			method: "GET",
 			credentials: "include",
 		});
@@ -55,7 +55,7 @@ export const getOneData = async (
 	id: string | undefined | null
 ) => {
 	try {
-		const res = await fetch(`${ENVIRONMENT}${path}/${id}`, {
+		const res = await fetch(`${ENVIRONMENT}api/${path}/${id}`, {
 			method: "GET",
 			credentials: "include",
 		});
@@ -74,7 +74,7 @@ export const postData = async (
 	body: User | Post | undefined | To
 ) => {
 	try {
-		const res = await fetch(`${ENVIRONMENT}${path}`, {
+		const res = await fetch(`${ENVIRONMENT}api/${path}`, {
 			method: "POST",
 			credentials: "include",
 			body: JSON.stringify(body),
@@ -98,7 +98,7 @@ export const putData = async (
 	body: User | Post | PostId | Vote | Password
 ) => {
 	try {
-		const res = await fetch(`${ENVIRONMENT}${path}/${id}`, {
+		const res = await fetch(`${ENVIRONMENT}api/${path}/${id}`, {
 			method: "PUT",
 			credentials: "include",
 			body: JSON.stringify(body),
@@ -118,7 +118,7 @@ export const putData = async (
 
 export const deleteData = async (path: string, id: string) => {
 	try {
-		const res = await fetch(`${ENVIRONMENT}${path}/${id}`, {
+		const res = await fetch(`${ENVIRONMENT}api/${path}/${id}`, {
 			method: "DELETE",
 			credentials: "include",
 		});
