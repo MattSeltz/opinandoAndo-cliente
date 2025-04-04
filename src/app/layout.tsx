@@ -11,7 +11,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-	title: "XYZ",
+	title: "OpinandoAndo",
 	description: "Social App made by Matías Seltzer",
 };
 

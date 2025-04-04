@@ -15,7 +15,7 @@ export const HeaderComponent = async () => {
 	return (
 		<header className="flex items-center justify-between bg-blue-500 text-white p-4">
 			<Link href={"/"}>
-				<h1 className="text-xl font-bold tracking-widest">XYZ</h1>
+				<h1 className="text-xl font-bold tracking-widest">OpinandoAndo</h1>
 			</Link>
 
 			<nav>
