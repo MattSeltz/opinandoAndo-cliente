@@ -6,7 +6,7 @@
 				{ "key": "Access-Control-Allow-Credentials", "value": "true" },
 				{
 					"key": "Access-Control-Allow-Origin",
-					"value": "https://xyz-cliente.vercel.app/"
+					"value": "https://opinando-ando.vercel.app/"
 				},
 				{
 					"key": "Access-Control-Allow-Methods",
